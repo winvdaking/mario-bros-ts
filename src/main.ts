@@ -1,12 +1,7 @@
-class Game{
+import World from './modules/world';
 
-    constructor(){};
+const world = new World();
 
-    init(){
-        
-    };
-}
+world.generate();
 
-console.log(new Game().init());
-
-export default Game;
+console.log(world.render());
