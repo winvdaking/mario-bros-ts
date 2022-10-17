@@ -10,7 +10,9 @@ class ElementWorld {
 		M : Représente Mario
 		@ : Représente un Goomba
 		= : Représente un bloc
-		? : Représente un bloc magique avec un item (en dev)`;
+		? : Représente un bloc magique avec un item (en dev)
+		<- : Pour que Mario marche vers la gauche
+		-> : Pour que Mario marche vers la droite`;
 	}
 };
 
