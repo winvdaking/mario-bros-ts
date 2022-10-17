@@ -1,0 +1,3 @@
+interface IRender{
+    render(): string;
+}

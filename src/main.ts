@@ -3,7 +3,7 @@ class Game{
     constructor(){};
 
     init(){
-
+        
     };
 }
 
