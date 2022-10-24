@@ -1,3 +1,4 @@
+import process from 'node:process';
 import keypress from "keypress";
 
 import ElementWorld from './elementWorld';
@@ -14,7 +15,7 @@ class World implements IRender {
 
 	constructor(){
 		this._world = Array(16).fill('').map(() => Array(64).fill(' '));
-		setInterval(this.moveMonster.bind(this), 300);
+		setInterval(this.moveMonster.bind(this), 500);
 		this.controller();
 	}
 
@@ -36,9 +37,11 @@ class World implements IRender {
 		keypress(process.stdin);
 
 		process.stdin.on('keypress', (ch, key) => {
-			if (key && key.ctrl && key.name == 'c') {
+			if (key && (key.ctrl && key.name == 'c') || (key.name === 'q')) {
 				process.stdin.pause();
+				process.exit(0);
 			}
+
 			if (key && key.name === 'left') {
 				this.setPos(x, y, ' ');
 				this.setPos(x, --y, ElementWorld.MARIO);
@@ -61,7 +64,7 @@ class World implements IRender {
 
 	moveMonster(){
 		let [x, y] = this.getPosOf('@');
-		if (y <= 36 && y > 26) {
+		if (y < 36 && y > 26) {
 			this.setPos(x, y, ' ');
 			this.setPos(x, ++y, ElementWorld.MONSTER);
 			console.clear();
