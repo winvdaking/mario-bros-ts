@@ -53,6 +53,22 @@ class World implements IRender {
 				console.log(this.render());
 			}
 
+			
+			if (key && key.name === 'space'){
+				this.setPos(x-2, y, ElementWorld.MARIO);
+				this.setPos(x, y, ' ');
+				console.log(this.render());
+				if (this.getPos(x-3, y).includes(ElementWorld.BONUS)) {
+					this.setPos(x-4, y, ElementWorld.ITEM);
+					console.log(this.render());
+				}
+				setInterval(() => {
+					this.setPos(x, y, ElementWorld.MARIO);
+					this.setPos(x-2, y, ' ');
+					console.log(this.render());
+				}, 500);
+			}
+
 		});
 
 		process.stdin.setRawMode(true);
