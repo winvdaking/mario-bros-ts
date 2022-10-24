@@ -1,9 +1,7 @@
 import process from 'node:process';
 import keypress from "keypress";
-
 import ElementWorld from './elementWorld';
 import IRender from './interfaces/irender';
-import ElementWorld from "./elementWorld";
 
 
 let x = 13, y = 8;
