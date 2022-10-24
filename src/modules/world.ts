@@ -61,7 +61,7 @@ class World implements IRender {
 
 	moveMonster(){
 		let [x, y] = this.getPosOf('@');
-		if (y < 36 && y > 26) {
+		if (y < 36) {
 			this.setPos(x, y, ' ');
 			this.setPos(x, ++y, ElementWorld.MONSTER);
 			console.log(this.render());

@@ -1,4 +1,4 @@
-class ElementWorld {
+export default class ElementWorld {
 
 	static readonly FLOOR : string = '#';
 	static readonly BONUS : string = '?';
@@ -19,5 +19,3 @@ class ElementWorld {
 | CTRL+C : Pour arrêter la partie			       |
 +--------------------------------------------------------------+`;
 };
-
-export default ElementWorld;
