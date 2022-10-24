@@ -1,8 +1,10 @@
 class ElementWorld {
 
-	static FLOOR : string = '#';
-	static BONUS : string = '[?]';
-	static FLOAT_PLAT : string = '_';
+	static readonly FLOOR : string = '#';
+	static readonly BONUS : string = '?';
+	static readonly FLOAT_PLAT : string = '=';
+	static readonly MARIO : string = 'M';
+	static readonly MONSTER : string = '@';
 
 	lexique(){
 		return `
