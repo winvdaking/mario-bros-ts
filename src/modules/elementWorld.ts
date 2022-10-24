@@ -6,17 +6,18 @@ class ElementWorld {
 	static readonly MARIO : string = 'M';
 	static readonly MONSTER : string = '@';
 
-	lexique(){
-		return `
-		# : Représente le sol
-		M : Représente Mario
-		@ : Représente un Goomba
-		= : Représente un bloc
-		? : Représente un bloc magique avec un item (en dev)
-		<- : Pour que Mario marche vers la gauche
-		-> : Pour que Mario marche vers la droite
-		CTRL+C : Pour arrêter la partie`;
-	}
+	static readonly LEXIQUE : string =
+`		** Mario Bros (by Théo & Dorian) **
++--------------------------------------------------------------+
+| # : Représente le sol					       |
+| M : Représente Mario					       |
+| @ : Représente un Goomba				       |
+| = : Représente un bloc				       |
+| ? : Représente un bloc magique avec un item (en dev)         |
+| <- : Pour que Mario marche vers la gauche	     	       |
+| -> : Pour que Mario marche vers la droite		       |
+| CTRL+C : Pour arrêter la partie			       |
++--------------------------------------------------------------+`;
 };
 
 export default ElementWorld;

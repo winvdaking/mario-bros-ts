@@ -44,17 +44,13 @@ class World implements IRender {
 			if (key && key.name === 'left') {
 				this.setPos(x, y, ' ');
 				this.setPos(x, --y, ElementWorld.MARIO);
-				console.clear();
 				console.log(this.render());
-				console.log(new ElementWorld().lexique());
 			}
 
 			if (key && key.name === 'right') {
 				this.setPos(x, y, ' ');
 				this.setPos(x, ++y, ElementWorld.MARIO);
-				console.clear();
 				console.log(this.render());
-				console.log(new ElementWorld().lexique());
 			}
 
 		});
@@ -68,12 +64,10 @@ class World implements IRender {
 		if (y < 36 && y > 26) {
 			this.setPos(x, y, ' ');
 			this.setPos(x, ++y, ElementWorld.MONSTER);
-			console.clear();
 			console.log(this.render());
 		} else {
 			this.setPos(x, y, ' ');
 			this.setPos(x, --y, ElementWorld.MONSTER);
-			console.clear();
 			console.log(this.render());
 		}
 	}
@@ -112,9 +106,9 @@ class World implements IRender {
 	}
 
 	render(): string {
-		return this._world.join('\n').replaceAll(',', '');
+		console.clear();
+		return this._world.join('\n').replaceAll(',', '') + '\n' + ElementWorld.LEXIQUE;
 	}
-
 };
 
 export default World;
