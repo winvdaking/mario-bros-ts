@@ -1,5 +1,6 @@
 import keypress from "keypress";
 import IRender from './interfaces/irender';
+import ElementWorld from "./elementWorld";
 
 let x = 13, y = 8;
 
@@ -34,6 +35,7 @@ class World implements IRender {
 				this.setPos(x, --y, 'M');
 				console.clear();
 				console.log(this.render());
+				console.log(new ElementWorld().lexique());
 			}
 
 			if (key && key.name === 'right') {
@@ -41,6 +43,7 @@ class World implements IRender {
 				this.setPos(x, ++y, 'M');
 				console.clear();
 				console.log(this.render());
+				console.log(new ElementWorld().lexique());
 			}
 
 		});
