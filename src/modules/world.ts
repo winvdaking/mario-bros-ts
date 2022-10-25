@@ -43,17 +43,19 @@ class World implements IRender {
 			}
 
 			if (key && key.name === 'left') {
-				this.setPos(x, y, ' ');
-				this.setPos(x, --y, ElementWorld.MARIO);
-				console.log(this.render());
+				if (this.getPos(x, y-1)) {
+					this.setPos(x, y, ' ');
+					this.setPos(x, --y, ElementWorld.MARIO);
+					console.log(this.render());
+				}
 			}
-
 			if (key && key.name === 'right') {
-				this.setPos(x, y, ' ');
-				this.setPos(x, ++y, ElementWorld.MARIO);
-				console.log(this.render());
-			}
-
+				if (this.getPos(x, y + 1)) {
+					this.setPos(x, y, ' ');
+					this.setPos(x, ++y, ElementWorld.MARIO);
+					console.log(this.render());
+				}
+			};
 
 			if (key && key.name === 'space') {
 				this.setPos(x - 2, y, ElementWorld.MARIO);
@@ -63,11 +65,11 @@ class World implements IRender {
 					this.setPos(x - 4, y, ElementWorld.ITEM);
 					console.log(this.render());
 				}
-				setInterval(() => {
+				setTimeout(() => {
 					this.setPos(x, y, ElementWorld.MARIO);
 					this.setPos(x - 2, y, ' ');
 					console.log(this.render());
-				}, 500);
+				}, 300);
 			}
 
 		});
