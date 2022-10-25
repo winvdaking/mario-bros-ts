@@ -10,20 +10,21 @@ console.clear();
 
 class World implements IRender {
 
-	_world : string[][];
+	_world: string[][];
 
-	constructor(){
+	constructor() {
 		this._world = Array(16).fill('').map(() => Array(64).fill(' '));
 		setInterval(this.moveMonster.bind(this), 500);
 		this.controller();
 	}
 
-	getPos(x: number, y: number): string|undefined {
+	getPos(x: number, y: number): string | undefined {
 		return this._world[x][y];
 	}
 
 	getPosOf(value) {
 		const x = this._world.findIndex(arr => arr.includes(value));
+		if (x < 0) return [null, null];
 		const y = this._world[x].findIndex(a => a === value);
 		return [x, y];
 	}
@@ -32,7 +33,7 @@ class World implements IRender {
 		this._world[x][y] = value;
 	}
 
-	controller(){
+	controller() {
 		keypress(process.stdin);
 
 		process.stdin.on('keypress', (ch, key) => {
@@ -53,18 +54,18 @@ class World implements IRender {
 				console.log(this.render());
 			}
 
-			
-			if (key && key.name === 'space'){
-				this.setPos(x-2, y, ElementWorld.MARIO);
+
+			if (key && key.name === 'space') {
+				this.setPos(x - 2, y, ElementWorld.MARIO);
 				this.setPos(x, y, ' ');
 				console.log(this.render());
-				if (this.getPos(x-3, y).includes(ElementWorld.BONUS)) {
-					this.setPos(x-4, y, ElementWorld.ITEM);
+				if (this.getPos(x - 3, y).includes(ElementWorld.BONUS)) {
+					this.setPos(x - 4, y, ElementWorld.ITEM);
 					console.log(this.render());
 				}
 				setInterval(() => {
 					this.setPos(x, y, ElementWorld.MARIO);
-					this.setPos(x-2, y, ' ');
+					this.setPos(x - 2, y, ' ');
 					console.log(this.render());
 				}, 500);
 			}
@@ -75,22 +76,24 @@ class World implements IRender {
 		process.stdin.resume();
 	}
 
-	moveMonster(){
+	moveMonster(): void {
 		let [x, y] = this.getPosOf('@');
-		if (y < 36) {
-			this.setPos(x, y, ' ');
-			this.setPos(x, ++y, ElementWorld.MONSTER);
-			console.log(this.render());
-		} else {
-			this.setPos(x, y, ' ');
-			this.setPos(x, --y, ElementWorld.MONSTER);
-			console.log(this.render());
+		if (x && y) {
+			if (y < 36) {
+				this.setPos(x, y, ' ');
+				this.setPos(x, ++y, ElementWorld.MONSTER);
+				console.log(this.render());
+			} else {
+				this.setPos(x, y, ' ');
+				this.setPos(x, --y, ElementWorld.MONSTER);
+				console.log(this.render());
+			}
 		}
 	}
 
 	generate(): void {
-		for(let x = 0; x < this._world.length; x++){
-			for(let y = 0; y < this._world[x].length; y++){
+		for (let x = 0; x < this._world.length; x++) {
+			for (let y = 0; y < this._world[x].length; y++) {
 				if (x > 13 && x < 17) {
 					this.setPos(x, y, '#');
 				}
