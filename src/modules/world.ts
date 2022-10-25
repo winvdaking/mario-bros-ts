@@ -2,7 +2,7 @@ import process from 'node:process';
 import keypress from "keypress";
 import ElementWorld from './elementWorld';
 import IRender from './interfaces/irender';
-
+import chalk from 'chalk';
 
 let x = 13, y = 8;
 
@@ -13,7 +13,7 @@ class World implements IRender {
 	_world: string[][];
 
 	constructor() {
-		this._world = Array(16).fill('').map(() => Array(64).fill(' '));
+		this._world = Array(16).fill('').map(() => Array(64).fill(chalk.bgBlue(' ')));
 		setInterval(this.moveMonster.bind(this), 500);
 		this.controller();
 	}
@@ -44,14 +44,14 @@ class World implements IRender {
 
 			if (key && key.name === 'left') {
 				if (this.getPos(x, y-1)) {
-					this.setPos(x, y, ' ');
+					this.setPos(x, y, chalk.bgBlue(' '));
 					this.setPos(x, --y, ElementWorld.MARIO);
 					console.log(this.render());
 				}
 			}
 			if (key && key.name === 'right') {
 				if (this.getPos(x, y + 1)) {
-					this.setPos(x, y, ' ');
+					this.setPos(x, y, chalk.bgBlue(' '));
 					this.setPos(x, ++y, ElementWorld.MARIO);
 					console.log(this.render());
 				}
@@ -59,7 +59,7 @@ class World implements IRender {
 
 			if (key && key.name === 'space') {
 				this.setPos(x - 2, y, ElementWorld.MARIO);
-				this.setPos(x, y, ' ');
+				this.setPos(x, y, chalk.bgBlue(' '));
 				console.log(this.render());
 				if (this.getPos(x - 3, y).includes(ElementWorld.BONUS)) {
 					this.setPos(x - 4, y, ElementWorld.ITEM);
@@ -67,7 +67,7 @@ class World implements IRender {
 				}
 				setTimeout(() => {
 					this.setPos(x, y, ElementWorld.MARIO);
-					this.setPos(x - 2, y, ' ');
+					this.setPos(x - 2, y, chalk.bgBlue(' '));
 					console.log(this.render());
 				}, 300);
 			}
@@ -79,14 +79,14 @@ class World implements IRender {
 	}
 
 	moveMonster(): void {
-		let [x, y] = this.getPosOf('@');
+		let [x, y] = this.getPosOf(ElementWorld.MONSTER);
 		if (x && y) {
 			if (y < 36) {
-				this.setPos(x, y, ' ');
+				this.setPos(x, y, chalk.bgBlue(' '));
 				this.setPos(x, ++y, ElementWorld.MONSTER);
 				console.log(this.render());
 			} else {
-				this.setPos(x, y, ' ');
+				this.setPos(x, y, chalk.bgBlue(' '));
 				this.setPos(x, --y, ElementWorld.MONSTER);
 				console.log(this.render());
 			}
@@ -97,16 +97,16 @@ class World implements IRender {
 		for (let x = 0; x < this._world.length; x++) {
 			for (let y = 0; y < this._world[x].length; y++) {
 				if (x > 13 && x < 17) {
-					this.setPos(x, y, '#');
+					this.setPos(x, y, ElementWorld.FLOOR);
 				}
 
 				if (x === 10 && y === 22) {
-					this.setPos(x, y, '?');
+					this.setPos(x, y, ElementWorld.BONUS);
 				}
 
 				if (x === 10) {
 					if ([32, 33, 34, 35, 36, 37, 38].includes(y)) {
-						const character = (y % 2 === 0) ? '=' : '?';
+						const character = (y % 2 === 0) ? ElementWorld.FLOAT_PLAT : ElementWorld.BONUS;
 						this.setPos(x, y, character);
 					}
 				}
