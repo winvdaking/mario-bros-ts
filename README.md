@@ -1,6 +1,4 @@
-# Typescript Bootstrap Project
-
-Projet Typescript pré-configuré (Jest, Nodemon...)
+# Mario Bros in console using TypeScript
 
 ## Spécifications techniques
 
