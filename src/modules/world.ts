@@ -2,7 +2,6 @@ import process from 'node:process';
 import keypress from "keypress";
 import ElementWorld from './elementWorld';
 import IRender from './interfaces/irender';
-import chalk from 'chalk';
 
 let x = 13, y = 8;
 
@@ -13,7 +12,7 @@ class World implements IRender {
 	_world: string[][];
 
 	constructor() {
-		this._world = Array(16).fill('').map(() => Array(64).fill(chalk.bgBlue(' ')));
+		this._world = Array(16).fill('').map(() => Array(64).fill(ElementWorld.BACKGROUND));
 		setInterval(this.moveMonster.bind(this), 500);
 		this.controller();
 	}
@@ -44,7 +43,7 @@ class World implements IRender {
 
 			if (key && key.name === 'left') {
 				if (this.getPos(x, y - 1)) {
-					this.setPos(x, y, chalk.bgBlue(' '));
+					this.setPos(x, y, ElementWorld.BACKGROUND);
 					this.setPos(x, --y, ElementWorld.MARIO);
 					console.log(this.render());
 				};
@@ -52,25 +51,25 @@ class World implements IRender {
 
 			if (key && key.name === 'right') {
 				if (this.getPos(x, y + 1)) {
-					this.setPos(x, y, chalk.bgBlue(' '));
+					this.setPos(x, y, ElementWorld.BACKGROUND);
 					this.setPos(x, ++y, ElementWorld.MARIO);
 					console.log(this.render());
 				};
 			};
 
 			if (key && key.name === 'space') {
-				if (this.getPos(x - 3, y).includes(chalk.bgBlue(' '))) {
+				if (this.getPos(x - 3, y).includes(ElementWorld.BACKGROUND)) {
 					this.setPos(x - 4, y, ElementWorld.MARIO);
-					this.setPos(x, y, chalk.bgBlue(' '));
+					this.setPos(x, y, ElementWorld.BACKGROUND);
 					this.resetJump(4);
 				} else if (this.getPos(x - 3, y).includes(ElementWorld.BONUS)){
 					this.setPos(x - 4, y, ElementWorld.ITEM);
 					this.setPos(x - 2, y, ElementWorld.MARIO);
-					this.setPos(x, y, chalk.bgBlue(' '));
+					this.setPos(x, y, ElementWorld.BACKGROUND);
 					this.resetJump(2);
 				}else{
 					this.setPos(x - 2, y, ElementWorld.MARIO);
-					this.setPos(x, y, chalk.bgBlue(' '));
+					this.setPos(x, y, ElementWorld.BACKGROUND);
 					this.resetJump(2);
 				}
 			};
@@ -84,7 +83,7 @@ class World implements IRender {
 		console.log(this.render());
 		setTimeout(() => {
 			this.setPos(x, y, ElementWorld.MARIO);
-			this.setPos(x - xn, y, chalk.bgBlue(' '));
+			this.setPos(x - xn, y, ElementWorld.BACKGROUND);
 			console.log(this.render());
 		}, 300);
 	}
@@ -93,11 +92,11 @@ class World implements IRender {
 		let [x, y] = this.getPosOf(ElementWorld.MONSTER);
 		if (x && y) {
 			if (y < 36) {
-				this.setPos(x, y, chalk.bgBlue(' '));
+				this.setPos(x, y, ElementWorld.BACKGROUND);
 				this.setPos(x, ++y, ElementWorld.MONSTER);
 				console.log(this.render());
 			} else {
-				this.setPos(x, y, chalk.bgBlue(' '));
+				this.setPos(x, y, ElementWorld.BACKGROUND);
 				this.setPos(x, --y, ElementWorld.MONSTER);
 				console.log(this.render());
 			};

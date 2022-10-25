@@ -2,6 +2,7 @@
 import chalk  from 'chalk';
 export default class ElementWorld {
 
+	static readonly BACKGROUND : string = chalk.bgBlue(' ');
 	static readonly FLOOR : string = chalk.hex('#027100')('#');
 	static readonly BONUS : string = chalk.bgBlue('?');
 	static readonly FLOAT_PLAT : string = chalk.bgBlue('=');
