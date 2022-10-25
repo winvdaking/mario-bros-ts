@@ -33,49 +33,60 @@ class World implements IRender {
 		this._world[x][y] = value;
 	}
 
-	controller() {
+	controller(): void {
 		keypress(process.stdin);
 
 		process.stdin.on('keypress', (ch, key) => {
 			if (key && (key.ctrl && key.name == 'c') || (key.name === 'q')) {
 				process.stdin.pause();
 				process.exit(0);
-			}
+			};
 
 			if (key && key.name === 'left') {
-				if (this.getPos(x, y-1)) {
+				if (this.getPos(x, y - 1)) {
 					this.setPos(x, y, chalk.bgBlue(' '));
 					this.setPos(x, --y, ElementWorld.MARIO);
 					console.log(this.render());
-				}
-			}
+				};
+			};
+
 			if (key && key.name === 'right') {
 				if (this.getPos(x, y + 1)) {
 					this.setPos(x, y, chalk.bgBlue(' '));
 					this.setPos(x, ++y, ElementWorld.MARIO);
 					console.log(this.render());
-				}
+				};
 			};
 
 			if (key && key.name === 'space') {
-				this.setPos(x - 2, y, ElementWorld.MARIO);
-				this.setPos(x, y, chalk.bgBlue(' '));
-				console.log(this.render());
-				if (this.getPos(x - 3, y).includes(ElementWorld.BONUS)) {
+				if (this.getPos(x - 3, y).includes(chalk.bgBlue(' '))) {
+					this.setPos(x - 4, y, ElementWorld.MARIO);
+					this.setPos(x, y, chalk.bgBlue(' '));
+					this.resetJump(4);
+				} else if (this.getPos(x - 3, y).includes(ElementWorld.BONUS)){
 					this.setPos(x - 4, y, ElementWorld.ITEM);
-					console.log(this.render());
+					this.setPos(x - 2, y, ElementWorld.MARIO);
+					this.setPos(x, y, chalk.bgBlue(' '));
+					this.resetJump(2);
+				}else{
+					this.setPos(x - 2, y, ElementWorld.MARIO);
+					this.setPos(x, y, chalk.bgBlue(' '));
+					this.resetJump(2);
 				}
-				setTimeout(() => {
-					this.setPos(x, y, ElementWorld.MARIO);
-					this.setPos(x - 2, y, chalk.bgBlue(' '));
-					console.log(this.render());
-				}, 300);
-			}
-
+			};
 		});
 
 		process.stdin.setRawMode(true);
 		process.stdin.resume();
+	};
+
+	resetJump(xn): void{
+		console.log(this.render());
+		setTimeout(() => {
+			this.setPos(x, y, ElementWorld.MARIO);
+			this.setPos(x - xn, y, chalk.bgBlue(' '));
+			console.log(this.render());
+		}, 300);
 	}
 
 	moveMonster(): void {
@@ -89,16 +100,16 @@ class World implements IRender {
 				this.setPos(x, y, chalk.bgBlue(' '));
 				this.setPos(x, --y, ElementWorld.MONSTER);
 				console.log(this.render());
-			}
-		}
-	}
+			};
+		};
+	};
 
 	generate(): void {
 		for (let x = 0; x < this._world.length; x++) {
 			for (let y = 0; y < this._world[x].length; y++) {
 				if (x > 13 && x < 17) {
 					this.setPos(x, y, ElementWorld.FLOOR);
-				}
+				};
 
 				if (x === 10 && y === 22) {
 					this.setPos(x, y, ElementWorld.BONUS);
@@ -108,28 +119,28 @@ class World implements IRender {
 					if ([32, 33, 34, 35, 36, 37, 38].includes(y)) {
 						const character = (y % 2 === 0) ? ElementWorld.FLOAT_PLAT : ElementWorld.BONUS;
 						this.setPos(x, y, character);
-					}
-				}
+					};
+				};
 
 				if (x === 6 && y === 35) {
 					this.setPos(x, y, ElementWorld.BONUS);
-				}
+				};
 
 				if (x === 13 && y === 8) {
 					this.setPos(x, y, ElementWorld.MARIO);
-				}
+				};
 
 				if (x === 13 && y === 33) {
 					this.setPos(x, y, ElementWorld.MONSTER);
-				}
-			}
-		}
-	}
+				};
+			};
+		};
+	};
 
 	render(): string {
 		console.clear();
 		return this._world.join('\n').replaceAll(',', '') + '\n' + ElementWorld.LEXIQUE;
-	}
+	};
 };
 
 export default World;
