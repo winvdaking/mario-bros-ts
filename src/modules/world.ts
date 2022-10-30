@@ -77,10 +77,6 @@ class World implements IRender {
 				if (x === 13 && y === 8) {
 					this.setPos(x, y, ElementWorld.MARIO);
 				}
-
-				/*if (x === 13 && y === 33) {
-					this.setPos(x, y, ElementWorld.MONSTER);
-				}*/
 			}
 		}
 		this._isGenerated = true;
