@@ -1,6 +1,4 @@
-# Typescript Bootstrap Project
-
-Projet Typescript pré-configuré (Jest, Nodemon...)
+# Mario Bros in console using TypeScript
 
 ## Spécifications techniques
 
@@ -50,12 +48,4 @@ ou
 
 ---
 
-**Alexandre Leroux**
-
-Développeur programme (web & mobile)<br/>
-Enseignant / Formateur
-
-Mail : alex@sherpa.one<br/>
-Site : https://sherpa.one<br/>
-Github : @sherpa1<br/>
-Discord : sherpa#3890<br/>
+**Dorian & Théo**
