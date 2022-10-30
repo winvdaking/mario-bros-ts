@@ -23,6 +23,7 @@
     "homepage": "https://github.com/sherpa1/typescript-project-bootstrap#readme",
     "dependencies": {
         "@types/jest": "^29.1.1",
+        "chalk": "^4.1.2",
         "keypress": "^0.2.1",
         "ts-jest": "^29.0.3",
         "ts-node": "^10.9.1",

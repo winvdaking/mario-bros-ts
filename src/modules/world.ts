@@ -1,22 +1,40 @@
-import process from 'node:process';
-import keypress from "keypress";
-
 import ElementWorld from './elementWorld';
 import IRender from './interfaces/irender';
+import Monster from './monster';
 
-
-let x = 13, y = 8;
 
 console.clear();
 
 class World implements IRender {
 
 	_world : string[][];
+	_entity : any[];
+	private _isGenerated : boolean;
 
 	constructor(){
-		this._world = Array(16).fill('').map(() => Array(64).fill(' '));
-		setInterval(this.moveMonster.bind(this), 500);
-		this.controller();
+		this._world = Array(16).fill('').map(() => Array(64).fill(ElementWorld.BACKGROUND));
+		this._entity = [];
+		this._isGenerated = false;
+	}
+
+	private initEntity(){
+		this._entity.forEach(e => {
+			if (e instanceof Monster) {
+				this.setPos(e.position.x, e.position.y, ElementWorld.MONSTER);
+			} else {
+				this.setPos(e.position.x, e.position.y, ElementWorld.MARIO);
+			}
+			e.init();
+		});
+	}
+
+	addEntity(entity: any) {
+		this._entity.push(entity);
+		return this;
+	}
+
+	isGenerated(): boolean {
+		return this._isGenerated;
 	}
 
 	getPos(x: number, y: number): string|undefined {
@@ -25,6 +43,7 @@ class World implements IRender {
 
 	getPosOf(value) {
 		const x = this._world.findIndex(arr => arr.includes(value));
+		if (x < 0) return [null, null];
 		const y = this._world[x].findIndex(a => a === value);
 		return [x, y];
 	}
@@ -33,64 +52,20 @@ class World implements IRender {
 		this._world[x][y] = value;
 	}
 
-	controller(){
-		keypress(process.stdin);
-
-		process.stdin.on('keypress', (ch, key) => {
-			if (key && (key.ctrl && key.name == 'c') || (key.name === 'q')) {
-				process.stdin.pause();
-				process.exit(0);
-			}
-
-			if (key && key.name === 'left') {
-				this.setPos(x, y, ' ');
-				this.setPos(x, --y, ElementWorld.MARIO);
-				console.clear();
-				console.log(this.render());
-			}
-
-			if (key && key.name === 'right') {
-				this.setPos(x, y, ' ');
-				this.setPos(x, ++y, ElementWorld.MARIO);
-				console.clear();
-				console.log(this.render());
-			}
-
-		});
-
-		process.stdin.setRawMode(true);
-		process.stdin.resume();
-	}
-
-	moveMonster(){
-		let [x, y] = this.getPosOf('@');
-		if (y < 36 && y > 26) {
-			this.setPos(x, y, ' ');
-			this.setPos(x, ++y, ElementWorld.MONSTER);
-			console.clear();
-			console.log(this.render());
-		} else {
-			this.setPos(x, y, ' ');
-			this.setPos(x, --y, ElementWorld.MONSTER);
-			console.clear();
-			console.log(this.render());
-		}
-	}
-
 	generate(): void {
 		for(let x = 0; x < this._world.length; x++){
 			for(let y = 0; y < this._world[x].length; y++){
 				if (x > 13 && x < 17) {
-					this.setPos(x, y, '#');
+					this.setPos(x, y, ElementWorld.FLOOR);
 				}
 
 				if (x === 10 && y === 22) {
-					this.setPos(x, y, '?');
+					this.setPos(x, y, ElementWorld.BONUS);
 				}
 
 				if (x === 10) {
 					if ([32, 33, 34, 35, 36, 37, 38].includes(y)) {
-						const character = (y % 2 === 0) ? '=' : '?';
+						const character = (y % 2 === 0) ? ElementWorld.FLOAT_PLAT : ElementWorld.BONUS;
 						this.setPos(x, y, character);
 					}
 				}
@@ -103,15 +78,18 @@ class World implements IRender {
 					this.setPos(x, y, ElementWorld.MARIO);
 				}
 
-				if (x === 13 && y === 33) {
+				/*if (x === 13 && y === 33) {
 					this.setPos(x, y, ElementWorld.MONSTER);
-				}
+				}*/
 			}
 		}
+		this._isGenerated = true;
+		this.initEntity();
 	}
 
 	render(): string {
-		return this._world.join('\n').replaceAll(',', '');
+		console.clear();
+		return this._world.join('\n').replaceAll(',', '') + '\n' + ElementWorld.LEXIQUE;
 	}
 
 };
