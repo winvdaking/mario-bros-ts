@@ -10,13 +10,11 @@ import Position from './interfaces/iposition';
 
 export default class Player extends Entity {
 
-	jumped: boolean;
 	inventory: any[];
 
 	constructor(world : World, position : Position){
 		super(position, world);
 		this.inventory = [];
-		this.jumped = false;
 	}
 
 	init() : void {
